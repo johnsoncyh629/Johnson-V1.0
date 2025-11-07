@@ -1,0 +1,469 @@
+{% comment %}
+  Black Friday Banner Section - Homepage
+  Professional B2B style for Jump Starter products
+{% endcomment %}
+
+{% if section.settings.enable_banner %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+
+<div id="black-friday-banner" class="bf-banner-wrapper" data-banner-id="bf-2025">
+  <div class="bf-banner-container">
+    {%- comment -%} Close Button {%- endcomment -%}
+    <button class="bf-banner-close" aria-label="Close banner">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <div class="bf-banner-content">
+      {%- comment -%} Lightning Icon {%- endcomment -%}
+      <div class="bf-banner-icon">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+          <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z" fill="currentColor"/>
+        </svg>
+      </div>
+
+      {%- comment -%} Main Content {%- endcomment -%}
+      <div class="bf-banner-text">
+        <h2 class="bf-banner-title">{{ section.settings.main_title }}</h2>
+        <p class="bf-banner-subtitle">{{ section.settings.subtitle }}</p>
+        <p class="bf-banner-note">{{ section.settings.dealer_note }}</p>
+
+        {%- comment -%} Countdown Timer {%- endcomment -%}
+        <div class="bf-countdown" id="bf-countdown">
+          <div class="bf-countdown-item">
+            <span class="bf-countdown-value" id="days">00</span>
+            <span class="bf-countdown-label">Days</span>
+          </div>
+          <div class="bf-countdown-separator">:</div>
+          <div class="bf-countdown-item">
+            <span class="bf-countdown-value" id="hours">00</span>
+            <span class="bf-countdown-label">Hours</span>
+          </div>
+          <div class="bf-countdown-separator">:</div>
+          <div class="bf-countdown-item">
+            <span class="bf-countdown-value" id="minutes">00</span>
+            <span class="bf-countdown-label">Minutes</span>
+          </div>
+          <div class="bf-countdown-separator">:</div>
+          <div class="bf-countdown-item">
+            <span class="bf-countdown-value" id="seconds">00</span>
+            <span class="bf-countdown-label">Seconds</span>
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%} CTA Button {%- endcomment -%}
+      <div class="bf-banner-cta">
+        <a href="{{ section.settings.cta_link }}" class="bf-banner-button">
+          {{ section.settings.cta_text }}
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .bf-banner-wrapper {
+    background: linear-gradient(135deg, {{ section.settings.primary_color }} 0%, #8a1519 100%);
+    border-bottom: 3px solid {{ section.settings.secondary_color }};
+    position: relative;
+    overflow: hidden;
+    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  .bf-banner-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+      linear-gradient(45deg, transparent 48%, rgba(255,255,255,0.03) 49%, rgba(255,255,255,0.03) 51%, transparent 52%),
+      linear-gradient(-45deg, transparent 48%, rgba(255,255,255,0.03) 49%, rgba(255,255,255,0.03) 51%, transparent 52%);
+    background-size: 20px 20px;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .bf-banner-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    position: relative;
+  }
+
+  .bf-banner-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    padding: 8px;
+    transition: all 0.3s ease;
+    z-index: 10;
+  }
+
+  .bf-banner-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg);
+  }
+
+  .bf-banner-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .bf-banner-icon {
+    color: #FFD700;
+    flex-shrink: 0;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.05); }
+  }
+
+  .bf-banner-text {
+    flex: 1;
+    max-width: 600px;
+    text-align: center;
+  }
+
+  .bf-banner-title {
+    font-size: 48px;
+    font-weight: 900;
+    color: #fff;
+    margin: 0 0 10px 0;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    line-height: 1.1;
+  }
+
+  .bf-banner-subtitle {
+    font-size: 28px;
+    font-weight: 700;
+    color: #FFD700;
+    margin: 0 0 8px 0;
+    letter-spacing: 1px;
+  }
+
+  .bf-banner-note {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 20px 0;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+  }
+
+  .bf-countdown {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .bf-countdown-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 60px;
+  }
+
+  .bf-countdown-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .bf-countdown-label {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.8);
+    text-transform: uppercase;
+    margin-top: 5px;
+    letter-spacing: 1px;
+  }
+
+  .bf-countdown-separator {
+    font-size: 32px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    padding: 0 5px;
+  }
+
+  .bf-banner-cta {
+    flex-shrink: 0;
+  }
+
+  .bf-banner-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    color: {{ section.settings.primary_color }};
+    padding: 18px 40px;
+    font-size: 18px;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    border: 2px solid #fff;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  }
+
+  .bf-banner-button:hover {
+    background: transparent;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+
+  .bf-banner-button svg {
+    transition: transform 0.3s ease;
+  }
+
+  .bf-banner-button:hover svg {
+    transform: translateX(5px);
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 968px) {
+    .bf-banner-container {
+      padding: 30px 15px;
+    }
+
+    .bf-banner-content {
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    .bf-banner-icon {
+      display: none;
+    }
+
+    .bf-banner-title {
+      font-size: 32px;
+    }
+
+    .bf-banner-subtitle {
+      font-size: 22px;
+    }
+
+    .bf-countdown {
+      gap: 5px;
+      padding: 12px;
+    }
+
+    .bf-countdown-item {
+      min-width: 50px;
+    }
+
+    .bf-countdown-value {
+      font-size: 24px;
+    }
+
+    .bf-countdown-label {
+      font-size: 9px;
+    }
+
+    .bf-countdown-separator {
+      font-size: 24px;
+      padding: 0 3px;
+    }
+
+    .bf-banner-button {
+      padding: 15px 30px;
+      font-size: 16px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .bf-banner-title {
+      font-size: 24px;
+      letter-spacing: 1px;
+    }
+
+    .bf-banner-subtitle {
+      font-size: 18px;
+    }
+
+    .bf-banner-note {
+      font-size: 12px;
+    }
+
+    .bf-countdown-item {
+      min-width: 40px;
+    }
+
+    .bf-countdown-value {
+      font-size: 20px;
+    }
+
+    .bf-countdown-separator {
+      font-size: 20px;
+    }
+  }
+
+  .bf-banner-hidden {
+    display: none !important;
+  }
+</style>
+
+<script>
+(function() {
+  'use strict';
+
+  const banner = document.getElementById('black-friday-banner');
+  const closeBtn = banner?.querySelector('.bf-banner-close');
+  const bannerId = banner?.dataset.bannerId;
+
+  // Check if banner was closed in this session
+  if (sessionStorage.getItem(bannerId + '_closed') === 'true') {
+    banner?.classList.add('bf-banner-hidden');
+    return;
+  }
+
+  // Close button functionality
+  closeBtn?.addEventListener('click', function() {
+    banner.classList.add('bf-banner-hidden');
+    sessionStorage.setItem(bannerId + '_closed', 'true');
+  });
+
+  // Countdown Timer
+  const endDate = new Date('{{ section.settings.end_date }}T23:59:59').getTime();
+
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = endDate - now;
+
+    if (distance < 0) {
+      document.getElementById('bf-countdown').innerHTML = '<p style="color: #fff; margin: 0; font-size: 18px;">Sale Ended</p>';
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById('days').textContent = String(days).padStart(2, '0');
+    document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+    document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+    document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+  }
+
+  // Check if event is active
+  const startDate = new Date('{{ section.settings.start_date }}T00:00:00').getTime();
+  const now = new Date().getTime();
+
+  if (now >= startDate && now <= endDate) {
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  } else if (now < startDate) {
+    banner?.classList.add('bf-banner-hidden');
+  } else {
+    banner?.classList.add('bf-banner-hidden');
+  }
+})();
+</script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Black Friday Banner",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_banner",
+      "label": "Enable Banner",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "main_title",
+      "label": "Main Title",
+      "default": "BLACK FRIDAY SALE"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Up to 20% OFF"
+    },
+    {
+      "type": "text",
+      "id": "dealer_note",
+      "label": "Dealer Note",
+      "default": "Exclusive offer for authorized dealers and distributors"
+    },
+    {
+      "type": "text",
+      "id": "start_date",
+      "label": "Start Date (YYYY-MM-DD)",
+      "default": "2025-11-07",
+      "info": "Format: 2025-11-07"
+    },
+    {
+      "type": "text",
+      "id": "end_date",
+      "label": "End Date (YYYY-MM-DD)",
+      "default": "2025-12-01",
+      "info": "Format: 2025-12-01"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button Link",
+      "default": "https://de.lokithorshop.com/collections/lokithor-black-friday-sale"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button Text",
+      "default": "Order Now"
+    },
+    {
+      "type": "color",
+      "id": "primary_color",
+      "label": "Primary Color",
+      "default": "#ac1d23"
+    },
+    {
+      "type": "color",
+      "id": "secondary_color",
+      "label": "Secondary Color",
+      "default": "#a9abb2"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Black Friday Banner"
+    }
+  ]
+}
+{% endschema %}
