@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vintage Punk Gear - DIY Design Demo</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Permanent+Marker&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* 核心CSS变量 */
+        :root {
+            --color-vintage-pink: #E85D75;
+            --color-smoke-blue: #6B9AC4;
+            --color-rust-orange: #C77D58;
+            --color-mustard: #D4A574;
+            --color-cream: #FAF7F2;
+            --color-warm-black: #2B2B2B;
+            --color-warm-gray: #8B8680;
+
+            --font-handwriting: 'Caveat', cursive;
+            --font-display: 'Permanent Marker', cursive;
+            --font-body: 'Work Sans', -apple-system, sans-serif;
+
+            --spacing-sm: 12px;
+            --spacing-md: 20px;
+            --spacing-lg: 30px;
+            --spacing-xl: 40px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--color-warm-black);
+            background-color: var(--color-cream);
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Logo */
+        .logo-wrapper {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 25px;
+            background: var(--color-cream);
+            border: 3px solid var(--color-warm-black);
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            box-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+            transform: rotate(-1deg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .logo-main {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--color-vintage-pink);
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+        }
+
+        .logo-sub {
+            font-family: var(--font-handwriting);
+            font-size: 1.2rem;
+            color: var(--color-smoke-blue);
+        }
+
+        /* Hero */
+        .hero-text {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 8vw, 4rem);
+            text-transform: uppercase;
+            color: var(--color-warm-black);
+            text-shadow: 3px 3px 0 var(--color-vintage-pink);
+            transform: rotate(-2deg);
+            text-align: center;
+            margin: var(--spacing-xl) 0;
+        }
+
+        .hero-subtext {
+            font-family: var(--font-handwriting);
+            font-size: 1.5rem;
+            color: var(--color-warm-gray);
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        /* Buttons */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-display);
+            font-size: 1rem;
+            color: white;
+            background: var(--color-vintage-pink);
+            padding: 15px 30px;
+            border: 3px solid var(--color-warm-black);
+            border-radius: 50px 40px 45px 35px / 35px 45px 40px 50px;
+            text-decoration: none;
+            text-transform: uppercase;
+            box-shadow: 3px 3px 0 var(--color-warm-black), 6px 6px 0 rgba(0,0,0,0.1);
+            transform: rotate(-1deg);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            transform: rotate(0deg) translateY(-2px);
+            box-shadow: 4px 4px 0 var(--color-warm-black), 8px 8px 0 rgba(0,0,0,0.15);
+        }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin: var(--spacing-xl) 0;
+        }
+
+        /* Product Card */
+        .product-card {
+            background: white;
+            padding: 15px;
+            box-shadow: 3px 3px 0 rgba(0,0,0,0.1), 6px 6px 0 rgba(0,0,0,0.05);
+            transform: rotate(-1deg);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:nth-child(even) {
+            transform: rotate(1deg);
+        }
+
+        .product-card:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+
+        .product-image-wrapper {
+            position: relative;
+            background: white;
+            padding: 12px;
+            padding-bottom: 40px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: var(--spacing-md);
+            transform: rotate(-2deg);
+        }
+
+        .product-image-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 20px;
+            background: rgba(255, 248, 220, 0.7);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #ddd, #aaa);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-handwriting);
+            font-size: 1.5rem;
+            color: #666;
+        }
+
+        .product-title {
+            font-family: var(--font-handwriting);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+            transform: rotate(-1deg);
+        }
+
+        .product-price {
+            display: inline-block;
+            font-family: var(--font-display);
+            font-size: 1.125rem;
+            color: var(--color-vintage-pink);
+            padding: 8px 16px;
+            background: var(--color-cream);
+            border: 3px solid var(--color-vintage-pink);
+            border-radius: 50% 50% 50% 50% / 40% 60% 40% 60%;
+            transform: rotate(5deg);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .design-inspiration {
+            background: #fff9e6;
+            padding: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+            border-left: 4px solid var(--color-mustard);
+            border-radius: 0 15px 15px 0;
+            font-family: var(--font-handwriting);
+            font-size: 1.125rem;
+        }
+
+        .design-inspiration::before {
+            content: '✦ 设计灵感';
+            display: block;
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--color-rust-orange);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-block;
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border: 2px solid currentColor;
+            border-radius: 3px;
+            text-transform: uppercase;
+            transform: rotate(-2deg);
+            margin-bottom: 8px;
+        }
+
+        .badge-new {
+            color: var(--color-rust-orange);
+            background: rgba(199, 125, 88, 0.1);
+        }
+
+        /* Divider */
+        .diy-divider {
+            border: none;
+            height: 3px;
+            background: var(--color-warm-black);
+            margin: var(--spacing-lg) 0;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .diy-divider::after {
+            content: '✦';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--color-cream);
+            padding: 0 10px;
+            font-size: 1.2rem;
+            color: var(--color-rust-orange);
+        }
+
+        /* Sticky Note */
+        .sticky-note {
+            background: #fef9c3;
+            padding: 20px;
+            margin: var(--spacing-lg) auto;
+            box-shadow: 3px 3px 5px rgba(0,0,0,0.1);
+            transform: rotate(-2deg);
+            font-family: var(--font-handwriting);
+            font-size: 1.25rem;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .sticky-note::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 20px;
+            background: rgba(0,0,0,0.05);
+            border-radius: 2px;
+        }
+
+        /* Info box */
+        .info-box {
+            background: white;
+            padding: var(--spacing-lg);
+            border: 3px dashed var(--color-warm-gray);
+            border-radius: 10px;
+            margin: var(--spacing-xl) 0;
+        }
+
+        .info-box h3 {
+            font-family: var(--font-handwriting);
+            font-size: 1.5rem;
+            color: var(--color-vintage-pink);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- Logo -->
+        <div class="text-center">
+            <div class="logo-wrapper">
+                <span style="font-size: 1.5rem;">✦</span>
+                <div>
+                    <div class="logo-main">VINTAGE</div>
+                    <div class="logo-sub">PUNK GEAR</div>
+                </div>
+                <span style="font-size: 1.2rem; color: var(--color-rust-orange);">○</span>
+            </div>
+        </div>
+
+        <!-- Hero -->
+        <h1 class="hero-text">做真实的自己</h1>
+        <p class="hero-subtext">不随波逐流的朋克精神</p>
+
+        <div class="text-center">
+            <a href="#" class="btn-primary">
+                探索系列 →
+            </a>
+        </div>
+
+        <hr class="diy-divider">
+
+        <!-- 说明信息 -->
+        <div class="info-box">
+            <h3>🎨 设计系统演示</h3>
+            <p>这是Vintage Punk Gear的粗犷DIY手工感设计系统演示页面。所有元素都采用：</p>
+            <ul style="margin-top: 12px; padding-left: 20px;">
+                <li>✅ 手写+展示字体组合</li>
+                <li>✅ 温暖复古配色方案</li>
+                <li>✅ 不规则圆角和倾斜效果</li>
+                <li>✅ 拍立得白边照片效果</li>
+                <li>✅ 移动端优先的大触摸目标</li>
+            </ul>
+        </div>
+
+        <!-- Product Grid -->
+        <h2 style="font-family: var(--font-handwriting); font-size: 2rem; text-align: center; margin: var(--spacing-xl) 0;">
+            本周精选
+        </h2>
+
+        <div class="product-grid">
+
+            <!-- Product Card 1 -->
+            <div class="product-card">
+                <span class="badge badge-new">NEW</span>
+                <div class="product-image-wrapper">
+                    <div class="product-image">产品图片</div>
+                </div>
+                <h3 class="product-title">复古皮夹克</h3>
+                <div class="product-price">¥680</div>
+                <div class="design-inspiration">
+                    灵感来自70年代摇滚乐队的舞台服装，每一道缝线都讲述着自由的故事。
+                </div>
+                <a href="#" class="btn-primary" style="width: 100%; justify-content: center;">
+                    查看详情
+                </a>
+            </div>
+
+            <!-- Product Card 2 -->
+            <div class="product-card">
+                <div class="product-image-wrapper">
+                    <div class="product-image">产品图片</div>
+                </div>
+                <h3 class="product-title">铆钉腰带</h3>
+                <div class="product-price">¥180</div>
+                <div class="design-inspiration">
+                    手工钉制的金属铆钉，粗犷中透着精致，日常穿搭的点睛之笔。
+                </div>
+                <a href="#" class="btn-primary" style="width: 100%; justify-content: center;">
+                    查看详情
+                </a>
+            </div>
+
+            <!-- Product Card 3 -->
+            <div class="product-card">
+                <div class="product-image-wrapper">
+                    <div class="product-image">产品图片</div>
+                </div>
+                <h3 class="product-title">朋克链条包</h3>
+                <div class="product-price">¥450</div>
+                <div class="design-inspiration">
+                    环保皮革搭配粗链条设计，既酷又实用，装得下你的态度。
+                </div>
+                <a href="#" class="btn-primary" style="width: 100%; justify-content: center;">
+                    查看详情
+                </a>
+            </div>
+
+        </div>
+
+        <hr class="diy-divider">
+
+        <!-- Sticky Note -->
+        <div class="sticky-note" style="position: relative;">
+            欢迎来到Vintage Punk Gear<br>
+            做真实的自己，大胆表达！✨
+        </div>
+
+        <hr class="diy-divider">
+
+        <!-- Color Palette -->
+        <div class="info-box">
+            <h3>配色方案</h3>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px;">
+                <div style="flex: 1; min-width: 120px; text-align: center;">
+                    <div style="width: 100%; height: 60px; background: #E85D75; border-radius: 8px; margin-bottom: 8px;"></div>
+                    <p style="font-size: 0.875rem;">复古粉<br>#E85D75</p>
+                </div>
+                <div style="flex: 1; min-width: 120px; text-align: center;">
+                    <div style="width: 100%; height: 60px; background: #6B9AC4; border-radius: 8px; margin-bottom: 8px;"></div>
+                    <p style="font-size: 0.875rem;">烟雾蓝<br>#6B9AC4</p>
+                </div>
+                <div style="flex: 1; min-width: 120px; text-align: center;">
+                    <div style="width: 100%; height: 60px; background: #C77D58; border-radius: 8px; margin-bottom: 8px;"></div>
+                    <p style="font-size: 0.875rem;">锈橙<br>#C77D58</p>
+                </div>
+                <div style="flex: 1; min-width: 120px; text-align: center;">
+                    <div style="width: 100%; height: 60px; background: #FAF7F2; border: 2px solid #ddd; border-radius: 8px; margin-bottom: 8px;"></div>
+                    <p style="font-size: 0.875rem;">奶油白<br>#FAF7F2</p>
+                </div>
+                <div style="flex: 1; min-width: 120px; text-align: center;">
+                    <div style="width: 100%; height: 60px; background: #2B2B2B; border-radius: 8px; margin-bottom: 8px;"></div>
+                    <p style="font-size: 0.875rem; color: white; background: #2B2B2B; padding: 4px; border-radius: 4px;">温暖黑<br>#2B2B2B</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="text-align: center; padding: var(--spacing-xl) 0; color: var(--color-warm-gray);">
+            <p style="font-family: var(--font-handwriting); font-size: 1.25rem;">
+                Vintage Punk Gear Design System v1.0
+            </p>
+            <p style="margin-top: 8px; font-size: 0.875rem;">
+                粗犷DIY手工感 | 移动端优先 | Shopify兼容
+            </p>
+        </div>
+
+    </div>
+</body>
+</html>

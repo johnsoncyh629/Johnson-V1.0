@@ -1,0 +1,307 @@
+{% comment %}
+  DIY风格UI组件库
+  可复用的手工感组件
+{% endcomment %}
+
+{% comment %} ========== 手绘分割线 ========== {% endcomment %}
+{% if component == 'divider' %}
+  <hr class="diy-divider" {% if icon %}data-icon="{{ icon }}"{% endif %}>
+  <style>
+    .diy-divider[data-icon]::after {
+      content: attr(data-icon);
+    }
+  </style>
+{% endif %}
+
+{% comment %} ========== 印章标签 ========== {% endcomment %}
+{% if component == 'stamp-label' %}
+  <div class="stamp-label stamp-{{ type | default: 'default' }}">
+    {{ text }}
+  </div>
+  <style>
+    .stamp-label {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      padding: 8px 20px;
+      border: 3px solid currentColor;
+      border-radius: 50% 50% 50% 50% / 40% 60% 40% 60%;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transform: rotate(var(--rotation, -3deg));
+      box-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+    }
+
+    .stamp-label:hover {
+      transform: rotate(0deg) scale(1.05);
+    }
+
+    .stamp-default {
+      color: var(--color-warm-black);
+      background: var(--color-cream);
+    }
+
+    .stamp-primary {
+      color: var(--color-vintage-pink);
+      background: rgba(232, 93, 117, 0.1);
+    }
+
+    .stamp-accent {
+      color: var(--color-smoke-blue);
+      background: rgba(107, 154, 196, 0.1);
+    }
+  </style>
+{% endif %}
+
+{% comment %} ========== 手写便签 ========== {% endcomment %}
+{% if component == 'sticky-note' %}
+  <div class="sticky-note sticky-{{ color | default: 'yellow' }}">
+    <div class="sticky-note-content">
+      {{ content }}
+    </div>
+  </div>
+  <style>
+    .sticky-note {
+      position: relative;
+      background: #fef9c3;
+      padding: 20px;
+      margin: var(--spacing-md) 0;
+      box-shadow:
+        3px 3px 5px rgba(0,0,0,0.1),
+        inset 0 -2px 3px rgba(0,0,0,0.05);
+      transform: rotate(var(--note-rotation, -2deg));
+      font-family: var(--font-handwriting);
+      font-size: var(--font-size-md);
+      line-height: 1.8;
+    }
+
+    .sticky-note::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 20px;
+      background: rgba(0,0,0,0.05);
+      border-radius: 2px;
+    }
+
+    .sticky-yellow {
+      background: #fef9c3;
+    }
+
+    .sticky-pink {
+      background: #fecaca;
+    }
+
+    .sticky-blue {
+      background: #bfdbfe;
+    }
+
+    .sticky-note:nth-child(odd) {
+      --note-rotation: 1deg;
+    }
+
+    .sticky-note:nth-child(even) {
+      --note-rotation: -1.5deg;
+    }
+  </style>
+{% endif %}
+
+{% comment %} ========== 拼贴照片墙 ========== {% endcomment %}
+{% if component == 'photo-collage' %}
+  <div class="photo-collage">
+    {% for image in images %}
+      <div class="collage-photo" style="--rotation: {{ forloop.index | modulo: 5 | minus: 2 }}deg;">
+        <img src="{{ image.src }}" alt="{{ image.alt }}" loading="lazy">
+        {% if image.caption %}
+          <div class="photo-caption">{{ image.caption }}</div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+  <style>
+    .photo-collage {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--spacing-lg);
+      padding: var(--spacing-lg) 0;
+    }
+
+    .collage-photo {
+      position: relative;
+      background: white;
+      padding: 12px;
+      padding-bottom: 50px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      transform: rotate(var(--rotation, 0deg));
+      transition: all 0.3s ease;
+    }
+
+    .collage-photo:hover {
+      transform: rotate(0deg) scale(1.05);
+      z-index: 10;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+
+    .collage-photo img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .photo-caption {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      right: 12px;
+      font-family: var(--font-handwriting);
+      font-size: var(--font-size-sm);
+      color: var(--color-warm-black);
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .photo-collage {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+      }
+    }
+  </style>
+{% endif %}
+
+{% comment %} ========== Hero标语 ========== {% endcomment %}
+{% if component == 'hero-headline' %}
+  <div class="hero-section">
+    <h1 class="hero-text">{{ text }}</h1>
+    {% if subtext %}
+      <p class="hero-subtext">{{ subtext }}</p>
+    {% endif %}
+    {% if cta_text and cta_url %}
+      <a href="{{ cta_url }}" class="btn-primary hero-cta">
+        {{ cta_text }}
+      </a>
+    {% endif %}
+  </div>
+  <style>
+    .hero-section {
+      text-align: center;
+      padding: var(--spacing-xl) var(--spacing-md);
+      position: relative;
+    }
+
+    .hero-subtext {
+      font-family: var(--font-handwriting);
+      font-size: var(--font-size-lg);
+      color: var(--color-warm-gray);
+      margin-top: var(--spacing-md);
+      margin-bottom: var(--spacing-lg);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-cta {
+      margin-top: var(--spacing-lg);
+      font-size: var(--font-size-md);
+      padding: 18px 40px;
+    }
+  </style>
+{% endif %}
+
+{% comment %} ========== 手绘图标包裹器 ========== {% endcomment %}
+{% if component == 'icon-doodle' %}
+  <svg class="doodle-icon icon-{{ size | default: 'md' }}"
+       style="color: {{ color | default: 'var(--color-rust-orange)' }};">
+    <use href="#{{ icon }}"/>
+  </svg>
+  <style>
+    .doodle-icon {
+      display: inline-block;
+      vertical-align: middle;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .icon-sm {
+      width: 20px;
+      height: 20px;
+    }
+
+    .icon-md {
+      width: 30px;
+      height: 30px;
+    }
+
+    .icon-lg {
+      width: 50px;
+      height: 50px;
+    }
+  </style>
+{% endif %}
+
+{% comment %} ========== 设计灵感框 ========== {% endcomment %}
+{% if component == 'inspiration-box' %}
+  <div class="inspiration-box">
+    <div class="inspiration-icon">
+      <svg width="24" height="24">
+        <use href="#doodle-star" style="color: var(--color-mustard);"/>
+      </svg>
+    </div>
+    <div class="inspiration-content">
+      <h4 class="inspiration-title">{{ title | default: "设计灵感" }}</h4>
+      <div class="inspiration-text">{{ text }}</div>
+    </div>
+  </div>
+  <style>
+    .inspiration-box {
+      display: flex;
+      gap: var(--spacing-sm);
+      background: linear-gradient(135deg, #fff9e6 0%, #fef3c7 100%);
+      padding: var(--spacing-md);
+      margin: var(--spacing-lg) 0;
+      border-left: 4px solid var(--color-mustard);
+      border-radius: 0 12px 12px 0;
+      box-shadow: 3px 3px 0 rgba(0,0,0,0.05);
+      position: relative;
+    }
+
+    .inspiration-box::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 30px;
+      height: 30px;
+      background: url("data:image/svg+xml,%3Csvg width='30' height='30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0 L30 0 L30 30 Z' fill='%23fef3c7'/%3E%3C/svg%3E");
+      transform: rotate(180deg);
+    }
+
+    .inspiration-icon {
+      flex-shrink: 0;
+      padding-top: 4px;
+    }
+
+    .inspiration-title {
+      font-family: var(--font-body);
+      font-size: var(--font-size-xs);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--color-rust-orange);
+      margin-bottom: 8px;
+    }
+
+    .inspiration-text {
+      font-family: var(--font-handwriting);
+      font-size: var(--font-size-md);
+      line-height: 1.7;
+      color: var(--color-warm-black);
+    }
+  </style>
+{% endif %}

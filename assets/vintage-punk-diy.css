@@ -1,0 +1,530 @@
+/**
+ * VINTAGE PUNK GEAR - 粗犷DIY手工感样式表
+ * 适配移动端优先的独立精品店风格
+ */
+
+/* ============================================
+   1. 字体引入 - Google Fonts (免费)
+   ============================================ */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Permanent+Marker&family=Work+Sans:wght@400;500;600;700&display=swap');
+
+/* ============================================
+   2. CSS变量 - 设计系统
+   ============================================ */
+:root {
+  /* 品牌色 - 成熟复古版本 */
+  --color-vintage-pink: #E85D75;
+  --color-smoke-blue: #6B9AC4;
+  --color-rust-orange: #C77D58;
+  --color-mustard: #D4A574;
+  --color-olive: #8B9474;
+
+  /* 中性色 - 温暖基调 */
+  --color-cream: #FAF7F2;
+  --color-warm-black: #2B2B2B;
+  --color-warm-gray: #8B8680;
+  --color-light-gray: #E8E5E0;
+
+  /* 字体家族 */
+  --font-handwriting: 'Caveat', cursive;
+  --font-display: 'Permanent Marker', cursive;
+  --font-body: 'Work Sans', -apple-system, sans-serif;
+
+  /* 间距 - 移动端友好 */
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 20px;
+  --spacing-lg: 30px;
+  --spacing-xl: 40px;
+
+  /* 字体大小 - 移动端优先 */
+  --font-size-xs: 0.875rem;   /* 14px */
+  --font-size-sm: 1rem;        /* 16px */
+  --font-size-md: 1.125rem;    /* 18px */
+  --font-size-lg: 1.5rem;      /* 24px */
+  --font-size-xl: 2rem;        /* 32px */
+  --font-size-xxl: 2.5rem;     /* 40px */
+}
+
+/* ============================================
+   3. 全局重置和基础样式
+   ============================================ */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
+  color: var(--color-warm-black);
+  background-color: var(--color-cream);
+  /* 粗糙纸质纹理背景 */
+  background-image:
+    url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+  background-blend-mode: multiply;
+}
+
+/* 移动端最小触摸目标 */
+button,
+a {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================
+   4. 手绘装饰元素
+   ============================================ */
+
+/* 手绘分割线 */
+.diy-divider {
+  border: none;
+  height: 3px;
+  background: var(--color-warm-black);
+  margin: var(--spacing-lg) 0;
+  position: relative;
+  /* 不规则边缘 */
+  border-radius: 50% 50% 50% 50% / 10% 10% 10% 10%;
+}
+
+.diy-divider::after {
+  content: '✦';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(15deg);
+  background: var(--color-cream);
+  padding: 0 10px;
+  font-size: 1.2rem;
+  color: var(--color-rust-orange);
+}
+
+/* 手绘圆圈强调 */
+.diy-circle-highlight {
+  display: inline-block;
+  position: relative;
+}
+
+.diy-circle-highlight::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -8px;
+  right: -8px;
+  bottom: -5px;
+  border: 2px solid var(--color-vintage-pink);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  transform: rotate(-3deg);
+  opacity: 0.6;
+}
+
+/* 涂鸦箭头 */
+.diy-arrow {
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+  position: relative;
+  margin: 0 10px;
+}
+
+.diy-arrow::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  transform: translateY(-50%) rotate(-2deg);
+}
+
+.diy-arrow::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid currentColor;
+  border-top: 2px solid currentColor;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+/* ============================================
+   5. 产品卡片 - 拼贴/拍立得风格
+   ============================================ */
+.product-card {
+  background: white;
+  padding: 15px;
+  margin-bottom: var(--spacing-lg);
+  /* 撕纸边缘效果 */
+  border-radius: 2px;
+  box-shadow:
+    3px 3px 0 rgba(0,0,0,0.1),
+    6px 6px 0 rgba(0,0,0,0.05);
+  position: relative;
+  /* 轻微旋转 */
+  transform: rotate(var(--card-rotation, -1deg));
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:nth-child(odd) {
+  --card-rotation: 1deg;
+}
+
+.product-card:nth-child(even) {
+  --card-rotation: -1deg;
+}
+
+.product-card:hover {
+  transform: rotate(0deg) scale(1.02);
+  box-shadow:
+    5px 5px 0 rgba(0,0,0,0.15),
+    10px 10px 0 rgba(0,0,0,0.08);
+}
+
+/* 产品图片 - 白边拍立得效果 */
+.product-image-wrapper {
+  position: relative;
+  background: white;
+  padding: 12px;
+  padding-bottom: 40px; /* 拍立得底部留白 */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: var(--spacing-md);
+  transform: rotate(var(--image-rotation, -2deg));
+}
+
+.product-image-wrapper:nth-child(odd) {
+  --image-rotation: 2deg;
+}
+
+.product-image-wrapper img {
+  width: 100%;
+  height: auto;
+  display: block;
+  /* 手绘边框 */
+  outline: 1px solid rgba(0,0,0,0.1);
+  outline-offset: -1px;
+}
+
+/* 胶带效果 */
+.product-image-wrapper::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-3deg);
+  width: 80px;
+  height: 20px;
+  background: rgba(255, 248, 220, 0.7);
+  border-left: 1px dashed rgba(0,0,0,0.1);
+  border-right: 1px dashed rgba(0,0,0,0.1);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* 产品标题 - 手写风格 */
+.product-title {
+  font-family: var(--font-handwriting);
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-warm-black);
+  margin-bottom: var(--spacing-sm);
+  transform: rotate(-1deg);
+}
+
+/* 价格标签 - 印章效果 */
+.product-price {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: var(--font-size-md);
+  color: var(--color-vintage-pink);
+  padding: 8px 16px;
+  background: var(--color-cream);
+  border: 3px solid var(--color-vintage-pink);
+  /* 不规则形状 */
+  border-radius: 50% 50% 50% 50% / 40% 60% 40% 60%;
+  transform: rotate(5deg);
+  box-shadow: 2px 2px 0 rgba(232, 93, 117, 0.3);
+}
+
+/* 设计灵感文本框 */
+.design-inspiration {
+  background: #fff9e6;
+  padding: var(--spacing-md);
+  margin: var(--spacing-md) 0;
+  border-left: 4px solid var(--color-mustard);
+  position: relative;
+  font-family: var(--font-handwriting);
+  font-size: var(--font-size-md);
+  line-height: 1.6;
+  /* 纸张撕边效果 */
+  border-radius: 0 15px 15px 0 / 0 50% 50% 0;
+}
+
+.design-inspiration::before {
+  content: '✦ 设计灵感';
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-rust-orange);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+/* ============================================
+   6. 按钮 - 粗犷手绘风格
+   ============================================ */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: var(--font-size-sm);
+  color: white;
+  background: var(--color-vintage-pink);
+  padding: 15px 30px;
+  border: 3px solid var(--color-warm-black);
+  /* 不规则圆角 */
+  border-radius: 50px 40px 45px 35px / 35px 45px 40px 50px;
+  cursor: pointer;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow:
+    3px 3px 0 var(--color-warm-black),
+    6px 6px 0 rgba(0,0,0,0.1);
+  transform: rotate(-1deg);
+  transition: all 0.2s ease;
+  min-height: 54px;
+  min-width: auto;
+  white-space: nowrap;
+}
+
+.btn-primary:hover {
+  transform: rotate(0deg) translateY(-2px);
+  box-shadow:
+    4px 4px 0 var(--color-warm-black),
+    8px 8px 0 rgba(0,0,0,0.15);
+}
+
+.btn-primary:active {
+  transform: rotate(0deg) translateY(1px);
+  box-shadow:
+    2px 2px 0 var(--color-warm-black),
+    3px 3px 0 rgba(0,0,0,0.1);
+}
+
+.btn-secondary {
+  background: var(--color-smoke-blue);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--color-warm-black);
+  border-color: var(--color-warm-black);
+}
+
+/* ============================================
+   7. 标签和徽章 - 橡皮章效果
+   ============================================ */
+.badge {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border: 2px solid currentColor;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transform: rotate(-2deg);
+  opacity: 0.9;
+}
+
+.badge-new {
+  color: var(--color-rust-orange);
+  background: rgba(199, 125, 88, 0.1);
+}
+
+.badge-sale {
+  color: var(--color-vintage-pink);
+  background: rgba(232, 93, 117, 0.1);
+}
+
+.badge-hot {
+  color: #d63447;
+  background: rgba(214, 52, 71, 0.1);
+}
+
+/* ============================================
+   8. 排版增强
+   ============================================ */
+h1, h2, h3 {
+  font-family: var(--font-handwriting);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: var(--spacing-md);
+}
+
+h1 {
+  font-size: var(--font-size-xxl);
+  color: var(--color-vintage-pink);
+}
+
+h2 {
+  font-size: var(--font-size-xl);
+  color: var(--color-warm-black);
+}
+
+h3 {
+  font-size: var(--font-size-lg);
+}
+
+/* 大标语 */
+.hero-text {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 8vw, 4rem);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  line-height: 1.1;
+  color: var(--color-warm-black);
+  text-shadow:
+    3px 3px 0 var(--color-vintage-pink),
+    6px 6px 0 rgba(0,0,0,0.1);
+  transform: rotate(-2deg);
+  margin: var(--spacing-xl) 0;
+}
+
+/* ============================================
+   9. 导航菜单 - 手绘风格
+   ============================================ */
+.nav-menu {
+  display: flex;
+  gap: var(--spacing-md);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-link {
+  font-family: var(--font-handwriting);
+  font-size: var(--font-size-md);
+  color: var(--color-warm-black);
+  text-decoration: none;
+  position: relative;
+  padding: 8px 12px;
+  transition: color 0.2s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-vintage-pink);
+  transform: scaleX(0) rotate(-1deg);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.nav-link:hover {
+  color: var(--color-vintage-pink);
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1) rotate(-1deg);
+}
+
+/* ============================================
+   10. 表单元素 - 手绘风格
+   ============================================ */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea,
+select {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  padding: 12px 16px;
+  border: 2px solid var(--color-warm-gray);
+  background: white;
+  border-radius: 8px 10px 8px 10px / 10px 8px 10px 8px;
+  transition: all 0.2s ease;
+  min-height: 48px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-vintage-pink);
+  box-shadow: 0 0 0 3px rgba(232, 93, 117, 0.1);
+  transform: rotate(-0.5deg);
+}
+
+/* ============================================
+   11. 移动端优化
+   ============================================ */
+@media (max-width: 768px) {
+  :root {
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+  }
+
+  .product-card {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .hero-text {
+    font-size: clamp(1.5rem, 10vw, 2.5rem);
+  }
+
+  .nav-menu {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+}
+
+/* ============================================
+   12. 实用工具类
+   ============================================ */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mt-lg {
+  margin-top: var(--spacing-lg);
+}
+
+.mb-lg {
+  margin-bottom: var(--spacing-lg);
+}
+
+.handwritten {
+  font-family: var(--font-handwriting);
+}
+
+.display-font {
+  font-family: var(--font-display);
+}
+
+/* 旋转变化类 */
+.rotate-1 { transform: rotate(1deg); }
+.rotate-2 { transform: rotate(2deg); }
+.rotate--1 { transform: rotate(-1deg); }
+.rotate--2 { transform: rotate(-2deg); }

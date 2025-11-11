@@ -1,0 +1,213 @@
+{% comment %}
+  产品卡片 - 拍立得/拼贴风格
+  带白边、倾斜、胶带效果
+
+  使用方法:
+  {% render 'product-card-polaroid', product: product %}
+{% endcomment %}
+
+<div class="product-card polaroid-card">
+
+  {% comment %} 产品图片 - 拍立得白边效果 {% endcomment %}
+  <div class="product-image-wrapper">
+    {% comment %} 胶带装饰 {% endcomment %}
+    <div class="tape-decoration"></div>
+
+    <a href="{{ product.url }}" class="product-link">
+      {% if product.featured_image %}
+        <img
+          src="{{ product.featured_image | img_url: '600x' }}"
+          alt="{{ product.featured_image.alt | escape }}"
+          loading="lazy"
+          width="600"
+          height="auto">
+      {% else %}
+        <div class="placeholder-image">
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {% endif %}
+    </a>
+  </div>
+
+  {% comment %} 产品信息区 {% endcomment %}
+  <div class="product-info">
+
+    {% comment %} 标签 - 如果有标签 {% endcomment %}
+    {% if product.tags.size > 0 %}
+      <div class="product-badges">
+        {% if product.tags contains 'new' or product.tags contains 'NEW' %}
+          <span class="badge badge-new">NEW</span>
+        {% endif %}
+        {% if product.tags contains 'sale' or product.tags contains 'SALE' %}
+          <span class="badge badge-sale">SALE</span>
+        {% endif %}
+        {% if product.tags contains 'hot' or product.tags contains 'HOT' %}
+          <span class="badge badge-hot">HOT</span>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% comment %} 产品标题 - 手写风格 {% endcomment %}
+    <h3 class="product-title">
+      <a href="{{ product.url }}">{{ product.title }}</a>
+    </h3>
+
+    {% comment %} 价格 - 印章风格 {% endcomment %}
+    <div class="product-price-container">
+      {% if product.compare_at_price > product.price %}
+        <span class="product-price price-sale">
+          {{ product.price | money }}
+        </span>
+        <span class="price-compare">
+          {{ product.compare_at_price | money }}
+        </span>
+      {% else %}
+        <span class="product-price">
+          {{ product.price | money }}
+        </span>
+      {% endif %}
+    </div>
+
+    {% comment %} 设计灵感 - 从产品描述的第一句提取或使用metafield {% endcomment %}
+    {% if product.metafields.custom.design_inspiration %}
+      <div class="design-inspiration">
+        {{ product.metafields.custom.design_inspiration }}
+      </div>
+    {% elsif product.description != blank %}
+      <div class="product-short-description">
+        {{ product.description | strip_html | truncate: 80 }}
+      </div>
+    {% endif %}
+
+    {% comment %} 查看详情按钮 {% endcomment %}
+    <a href="{{ product.url }}" class="btn-primary product-cta">
+      <span>查看详情</span>
+      <svg width="20" height="20" viewBox="0 0 80 40" style="fill: none; stroke: currentColor; stroke-width: 3;">
+        <use href="#doodle-arrow-right"/>
+      </svg>
+    </a>
+
+  </div>
+
+  {% comment %} 手绘装饰元素 {% endcomment %}
+  <svg class="card-doodle card-doodle-1" width="30" height="30">
+    <use href="#doodle-star" style="color: var(--color-rust-orange);"/>
+  </svg>
+
+</div>
+
+<style>
+/* 拍立得卡片特定样式 */
+.polaroid-card {
+  position: relative;
+  overflow: visible;
+}
+
+/* 胶带装饰 */
+.tape-decoration {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-3deg);
+  width: 100px;
+  height: 25px;
+  background: rgba(255, 248, 220, 0.8);
+  border-left: 1px dashed rgba(0,0,0,0.1);
+  border-right: 1px dashed rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 10;
+}
+
+.tape-decoration::before,
+.tape-decoration::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 1px;
+  height: 100%;
+  background: rgba(0,0,0,0.05);
+  transform: translateY(-50%);
+}
+
+.tape-decoration::before {
+  left: 20%;
+}
+
+.tape-decoration::after {
+  right: 20%;
+}
+
+/* 卡片装饰涂鸦 */
+.card-doodle {
+  position: absolute;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.card-doodle-1 {
+  top: 10px;
+  right: 10px;
+  animation: doodle-float 3s ease-in-out infinite;
+}
+
+/* 产品信息区 */
+.product-info {
+  padding: var(--spacing-md);
+}
+
+.product-badges {
+  display: flex;
+  gap: 8px;
+  margin-bottom: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.product-short-description {
+  font-size: var(--font-size-sm);
+  color: var(--color-warm-gray);
+  margin: var(--spacing-sm) 0;
+  line-height: 1.6;
+}
+
+.product-cta {
+  margin-top: var(--spacing-md);
+  width: 100%;
+}
+
+/* 价格容器 */
+.product-price-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.price-compare {
+  font-size: var(--font-size-sm);
+  color: var(--color-warm-gray);
+  text-decoration: line-through;
+  font-family: var(--font-body);
+}
+
+.price-sale {
+  background: #ff4757;
+  border-color: #ff4757;
+  animation: price-pulse 2s ease-in-out infinite;
+}
+
+@keyframes price-pulse {
+  0%, 100% {
+    transform: rotate(5deg) scale(1);
+  }
+  50% {
+    transform: rotate(5deg) scale(1.05);
+  }
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .product-info {
+    padding: var(--spacing-sm);
+  }
+}
+</style>

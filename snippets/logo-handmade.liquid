@@ -1,0 +1,127 @@
+{% comment %}
+  手工感Logo组件
+  粗犷DIY风格 - Vintage Punk Gear
+{% endcomment %}
+
+<div class="handmade-logo">
+  <a href="/" class="logo-link">
+    <div class="logo-wrapper">
+      <!-- 手绘装饰元素 -->
+      <svg class="logo-doodle logo-doodle-1" width="30" height="30" viewBox="0 0 30 30">
+        <path d="M15 5 L20 10 L15 15 L10 10 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+        <circle cx="15" cy="15" r="3" fill="currentColor"/>
+      </svg>
+
+      <!-- 主Logo文字 -->
+      <div class="logo-text-container">
+        <span class="logo-main">VINTAGE</span>
+        <span class="logo-sub">PUNK GEAR</span>
+      </div>
+
+      <!-- 手绘装饰元素 -->
+      <svg class="logo-doodle logo-doodle-2" width="25" height="25" viewBox="0 0 25 25">
+        <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="3,3"/>
+      </svg>
+    </div>
+  </a>
+</div>
+
+<style>
+.handmade-logo {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.logo-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  padding: 15px 25px;
+  background: #FAF7F2;
+  border: 3px solid #2B2B2B;
+  /* 手绘不规则边框效果 */
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+  transform: rotate(-1deg);
+  transition: transform 0.2s ease;
+}
+
+.logo-link:hover .logo-wrapper {
+  transform: rotate(0deg) scale(1.02);
+}
+
+.logo-text-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.logo-main {
+  font-family: 'Permanent Marker', 'Courier New', monospace;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #E85D75;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  /* 手绘文字效果 */
+  text-shadow:
+    2px 2px 0 rgba(0,0,0,0.1),
+    -1px -1px 0 rgba(255,255,255,0.3);
+  line-height: 1;
+  transform: rotate(1deg);
+}
+
+.logo-sub {
+  font-family: 'Caveat', cursive;
+  font-size: 1.2rem;
+  color: #6B9AC4;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  transform: rotate(-0.5deg);
+}
+
+.logo-doodle {
+  color: #C77D58;
+  flex-shrink: 0;
+}
+
+.logo-doodle-1 {
+  animation: doodle-float 3s ease-in-out infinite;
+}
+
+.logo-doodle-2 {
+  animation: doodle-spin 8s linear infinite;
+}
+
+@keyframes doodle-float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(5deg); }
+}
+
+@keyframes doodle-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .logo-main {
+    font-size: 1.5rem;
+  }
+
+  .logo-sub {
+    font-size: 1rem;
+  }
+
+  .logo-wrapper {
+    padding: 12px 20px;
+    gap: 8px;
+  }
+
+  .logo-doodle {
+    width: 20px;
+    height: 20px;
+  }
+}
+</style>
